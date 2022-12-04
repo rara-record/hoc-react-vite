@@ -19,15 +19,13 @@ FilterWrapper = (WrapperComponents, entity, entityStore) => {
         }
 
         if (entity === 'OrderHistory') {
-          if (tradeSection === '0' && orderStatus === 0) return;
-
           const filterList = data.reduce((acc, cur) => {
-            const tradeSectionCondition = tradeSection
-              ? cur.tradeSection === tradeSection
-              : cur;
-            const orderStatusCondition = orderStatus
-              ? cur.orderStatus === Number(orderStatus)
-              : cur;
+            const tradeSectionCondition =
+              cur.tradeSection === tradeSection || tradeSection === '0';
+
+            console.log(tradeSection);
+            const orderStatusCondition =
+              cur.orderStatus === Number(orderStatus) || orderStatus === '0';
 
             if (tradeSectionCondition && orderStatusCondition) {
               acc.push(cur);
