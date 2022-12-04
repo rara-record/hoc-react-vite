@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
-  const [trem, seTtrem] = useState(' ');
+  const [term, seTterm] = useState(' ');
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -13,22 +13,27 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
-  let renderUsers = users.map((user) => (
-    <div key={user.id}>
-      <p>
-        <strong>{user.name}</strong>
-      </p>
-    </div>
-  ));
+  let filterUsers = users
+    .filter(({ name }) => {
+      return name.indexOf(term) > -1;
+    })
+    .map((user) => (
+      <div key={user.id}>
+        <p>
+          <strong>{user.name}</strong>
+        </p>
+      </div>
+    ));
 
   return (
     <div>
+      <h2>Users</h2>
       <input
         text='text'
-        value={trem}
-        onChange={(e) => seTtrem(e.target.value)}
+        value={term}
+        onChange={(e) => seTterm(e.target.value)}
       />
-      <div>{renderUsers}</div>
+      <div>{filterUsers}</div>
     </div>
   );
 };
