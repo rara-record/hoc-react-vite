@@ -1,5 +1,6 @@
 import SearchUsers from './UserList';
 import SearchTodos from './TodoList';
+import Table from './Table';
 
 const App = () => {
   return (
@@ -14,6 +15,17 @@ const App = () => {
       >
         <SearchUsers />
         <SearchTodos />
+      </section>
+
+      <hr />
+      <section
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Table />
       </section>
     </div>
   );
