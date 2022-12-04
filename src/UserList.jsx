@@ -1,41 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import HOC from './HOC';
 
-const UserList = () => {
-  const [users, setUsers] = useState([]);
-  const [term, seTterm] = useState(' ');
+const UserList = ({ data }) => {
+  console.log(data);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const res = await fetch('https://jsonplaceholder.typicode.com/users');
-      const json = await res.json();
-      setUsers(json);
-    };
-    fetchUsers();
-  }, []);
-
-  let filterUsers = users
-    .filter(({ name }) => {
-      return name.indexOf(term) > -1;
-    })
-    .map((user) => (
-      <div key={user.id}>
-        <p>
-          <strong>{user.name}</strong>
-        </p>
-      </div>
-    ));
-
-  return (
-    <div>
-      <h2>Users</h2>
-      <input
-        text='text'
-        value={term}
-        onChange={(e) => seTterm(e.target.value)}
-      />
-      <div>{filterUsers}</div>
+  let renderUsers = data.map((user) => (
+    <div key={user.id}>
+      <p>
+        <strong>{user.name}</strong>
+      </p>
     </div>
-  );
+  ));
+
+  return <div>{renderUsers}</div>;
 };
 
-export default UserList;
+const SearchUsers = HOC(UserList, 'users');
+export default SearchUsers;

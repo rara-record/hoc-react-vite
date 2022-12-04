@@ -1,5 +1,5 @@
-import UserList from './UserList';
-import TodoList from './TodoList';
+import SearchUsers from './UserList';
+import SearchTodos from './TodoList';
 
 const App = () => {
   return (
@@ -12,8 +12,8 @@ const App = () => {
           justifyContent: 'center',
         }}
       >
-        <UserList />
-        <TodoList />
+        <SearchUsers />
+        <SearchTodos />
       </section>
     </div>
   );
