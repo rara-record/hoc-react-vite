@@ -1,19 +1,21 @@
 import React from 'react';
 
 const HOC = (WrapperComponents, entity) => {
-  return class extends Component {
+  return class extends React.Component {
     state = {
       data: [],
       term: '',
     };
 
+    componentDidMount() {
+      const fetchData = async () => {
         const res = await fetch(
           `https://jsonplaceholder.typicode.com/${entity}`
         );
         const json = await res.json();
-        this.state = { ...this.state, data: json };
+        this.setState({ ...this.state, data: json });
       };
-      fetchUsers();
+      fetchData();
     }
 
     render() {
