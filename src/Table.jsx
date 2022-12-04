@@ -76,20 +76,40 @@ function Table() {
     new Set(data.map((item) => item.orderStatus))
   );
 
-  let filterData = data
-    .filter((item) => {
-      if (tradeSection === '0') return item;
-      return item.tradeSection.indexOf(tradeSection) > -1;
-    })
-    .map((trade) => (
-      <div key={trade.id} style={{ padding: '10px' }}>
-        <div>
-          Name: <strong>name: {trade.name}</strong>
-        </div>
-        <div> tradeSection: {trade.tradeSection}</div>
-        <div> orderStatus: {trade.orderStatus}</div>
+  const filterData = () => {
+    if (tradeSection === '0' && orderStatus === 0) return;
+
+    const filterList = data.reduce((acc, cur) => {
+      const tradeSectionCondition = tradeSection
+        ? cur.tradeSection === tradeSection
+        : cur;
+      const orderStatusCondition = orderStatus
+        ? cur.orderStatus === Number(orderStatus)
+        : cur;
+
+      if (tradeSectionCondition && orderStatusCondition) {
+        acc.push(cur);
+      }
+
+      return acc;
+    }, []);
+
+    setFiltered(filterList);
+  };
+
+  const render = filtered.map((trade) => (
+    <div key={trade.id} style={{ padding: '10px' }}>
+      <div>
+        Name: <strong>name: {trade.name}</strong>
       </div>
-    ));
+      <div> tradeSection: {trade.tradeSection}</div>
+      <div> orderStatus: {trade.orderStatus}</div>
+    </div>
+  ));
+
+  useEffect(() => {
+    filterData();
+  }, [tradeSection, orderStatus]);
 
   return (
     <div>
@@ -113,7 +133,7 @@ function Table() {
         </select>
       </div>
 
-      {filterData}
+      {render}
       {/* {data.map((item) => {
           const { name, tradeSection, orderStatus, id } = item;
           return (
