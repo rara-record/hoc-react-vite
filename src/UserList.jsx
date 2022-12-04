@@ -1,8 +1,6 @@
 import HOC from './HOC';
 
 const UserList = ({ data }) => {
-  console.log(data);
-
   let renderUsers = data.map((user) => (
     <div key={user.id}>
       <p>
